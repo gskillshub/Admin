@@ -231,7 +231,7 @@
               <li class="nav-item">
                 <a href="./borrow.html" class="nav-link">
                   <i class="nav-icon bi bi-palette"></i>
-                  <p>Funds Request</p>
+                  <p>Request Fund</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -244,7 +244,7 @@
                 <a href="./payback.html" class="nav-link">
                   <i class="nav-icon bi bi-speedometer"></i>
 
-                  <p>Fund Payback</p>
+                  <p>Active Loans</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -299,9 +299,11 @@
                 <div class="card-body">
                   <div class="mb-3">
                     <label for="fundSelect" class="form-label"
-                      >Choose Amount (CFA)</label
+                      >Choose Amount (CF)</label
                     >
                     <select class="form-select" id="fundSelect"></select>
+                    <!-- <select class="form-select" id="fundSelect"></select> -->
+                    <!-- <option>Select Amount</option> -->
                   </div>
                 </div>
               </div>
@@ -316,11 +318,11 @@
                     <strong>Option:</strong> <span id="summaryOption"></span>
                   </p> -->
                   <p>
-                    <strong>Request Amount:</strong>
+                    <strong>Request Amount(CF):</strong>
                     <span id="summaryRequest"></span>
                   </p>
                   <p>
-                    <strong>Deposit Amount:</strong>
+                    <strong>Request Amount(₦):</strong>
                     <span id="summaryDeposit"></span>
                   </p>
                   <!-- <p>
@@ -365,15 +367,66 @@
                 </div>
               </div>
 
-              <!-- Submit -->
-              <div class="d-flex justify-content-end">
-                <button class="btn btn-success btn-lg">
-                  Submit Borrow Request
+              <div class="text-end">
+                <button class="btn btn-success btn-lg" id="submitBtn">
+                  Submit Request
                 </button>
+              </div>
+
+              <div
+                class="modal fade"
+                id="otpModal"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content shadow-sm">
+                    <div class="modal-header bg-dark text-white">
+                      <h5 class="modal-title">OTP Verification</h5>
+                      <button
+                        type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-dark">
+                        Enter the OTP sent to your registered phone/email to
+                        continue.
+                      </p>
+                      <form id="otpForm">
+                        <div class="mb-3">
+                          <label for="otpInput" class="form-label"
+                            >Enter OTP</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="otpInput"
+                            maxlength="6"
+                            placeholder="6-digit code"
+                            required
+                          />
+                        </div>
+                        <div class="d-flex justify-content-between">
+                          <button
+                            type="button"
+                            class="btn btn-outline-secondary"
+                            id="resendOtp"
+                          >
+                            Resend OTP
+                          </button>
+                          <button type="submit" class="btn btn-info">
+                            Verify
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <!-- Self Only Modal -->
             <div
               class="modal fade"
               id="selfModal"
@@ -381,7 +434,8 @@
               aria-hidden="true"
             >
               <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+                <div class="modal-content shadow-sm">
+                  <!-- Header -->
                   <div class="modal-header bg-success text-white">
                     <h5 class="modal-title">Select Payout Account</h5>
                     <button
@@ -390,41 +444,88 @@
                       data-bs-dismiss="modal"
                     ></button>
                   </div>
+
+                  <!-- Body -->
                   <div class="modal-body">
-                    <p>You have multiple payout accounts. Please select one:</p>
+                    <p class="mb-3">
+                      You have multiple payout accounts. Please select one or
+                      more:
+                    </p>
+
                     <div class="list-group">
-                      <button
-                        type="button"
-                        class="list-group-item list-group-item-action"
+                      <label
+                        class="list-group-item d-flex justify-content-between align-items-center"
                       >
-                        GTBank — 1234567890
-                      </button>
-                      <button
-                        type="button"
-                        class="list-group-item list-group-item-action"
+                        <div>
+                          <strong>GTBank</strong> — 1234567890
+                          <div class="small text-muted">Kelechi James</div>
+                        </div>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          value="GTBank-1234567890"
+                        />
+                      </label>
+
+                      <label
+                        class="list-group-item d-flex justify-content-between align-items-center"
                       >
-                        Access Bank — 0987654321
-                      </button>
-                      <button
-                        type="button"
-                        class="list-group-item list-group-item-action"
+                        <div>
+                          <strong>Access Bank</strong> — 0987654321
+                          <div class="small text-muted">Daniel John</div>
+                        </div>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          value="Access-0987654321"
+                        />
+                      </label>
+
+                      <label
+                        class="list-group-item d-flex justify-content-between align-items-center"
                       >
-                        UBA — 1122334455
-                      </button>
-                      <button
-                        type="button"
-                        class="list-group-item list-group-item-action"
+                        <div>
+                          <strong>UBA</strong> — 1122334455
+                          <div class="small text-muted">Daniel James</div>
+                        </div>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          value="UBA-1122334455"
+                        />
+                      </label>
+
+                      <label
+                        class="list-group-item d-flex justify-content-between align-items-center"
                       >
-                        Zenith Bank — 5566778899
-                      </button>
-                      <button
-                        type="button"
-                        class="list-group-item list-group-item-action"
+                        <div>
+                          <strong>Zenith Bank</strong> — 5566778899
+                          <div class="small text-muted">Kingsley Paul</div>
+                        </div>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          value="Zenith-5566778899"
+                        />
+                      </label>
+
+                      <label
+                        class="list-group-item d-flex justify-content-between align-items-center"
                       >
-                        Fidelity Bank — 6677889900
-                      </button>
+                        <div>
+                          <strong>Fidelity Bank</strong> — 6677889900
+                          <div class="small text-muted">Ken James</div>
+                        </div>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          value="Fidelity-6677889900"
+                        />
+                      </label>
                     </div>
                   </div>
+
+                  <!-- Footer -->
                   <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">
                       Cancel
@@ -434,8 +535,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Split Accounts Modal -->
 
             <div
               class="modal fade"
@@ -525,16 +624,6 @@
               });
             </script>
 
-            <!-- </div> -->
-            <!-- 
-            document.getElementById(
-                  "summaryCommission"
-                ).textContent = `CFA${commission.toLocaleString()}`;
-                document.getElementById(
-                  "summaryTotal"
-                ).textContent = `CFA${total.toLocaleString()}`; -->
-
-            <!-- Bootstrap JS -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
             <script>
@@ -549,7 +638,7 @@
                 let requestAmount = option * 1000000;
                 let opt = document.createElement("option");
                 opt.value = option;
-                opt.textContent = `${option} (${requestAmount.toLocaleString()} CFA)`;
+                opt.textContent = `${option}`;
                 fundSelect.appendChild(opt);
               }
 
@@ -563,34 +652,55 @@
 
                 document.getElementById(
                   "summaryRequest"
-                ).textContent = `CFA${requestAmount.toLocaleString()}`;
+                ).textContent = `${requestAmount.toLocaleString()}`;
                 document.getElementById(
                   "summaryDeposit"
-                ).textContent = `CFA${requestAmount.toLocaleString()} x 1600 = ₦${depositAmount.toLocaleString()}`;
+                ).textContent = `${requestAmount.toLocaleString()} x 1600 = ₦${depositAmount.toLocaleString()}`;
 
                 summaryCard.classList.remove("d-none");
               });
 
-              // Auto-open modal based on payout method selection
-              document
-                .getElementById("selfOnly")
-                .addEventListener("change", function () {
-                  if (this.checked) {
-                    new bootstrap.Modal(
-                      document.getElementById("selfModal")
-                    ).show();
-                  }
-                });
-              document
-                .getElementById("splitAccounts")
-                .addEventListener("change", function () {
-                  if (this.checked) {
-                    new bootstrap.Modal(
-                      document.getElementById("splitModal")
-                    ).show();
-                  }
-                });
+              //  modal based on payout method selection
             </script>
+
+            <script>
+              const submitBtn = document.getElementById("submitBtn");
+              const otpForm = document.getElementById("otpForm");
+              let targetModal = null;
+
+              submitBtn.addEventListener("click", () => {
+                if (document.getElementById("selfOnly").checked) {
+                  targetModal = "selfModal";
+                } else if (document.getElementById("splitAccounts").checked) {
+                  targetModal = "splitModal";
+                } else {
+                  alert("Please select a payout method.");
+                  return;
+                }
+                const otpModal = new bootstrap.Modal(
+                  document.getElementById("otpModal")
+                );
+                otpModal.show();
+              });
+
+              otpForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const otp = document.getElementById("otpInput").value;
+                if (otp === "123456") {
+                  bootstrap.Modal.getInstance(
+                    document.getElementById("otpModal")
+                  ).hide();
+                  new bootstrap.Modal(
+                    document.getElementById(targetModal)
+                  ).show();
+                } else {
+                  alert("Invalid OTP. Try again.");
+                }
+              });
+            </script>
+
+            <!-- Bootstrap JS bundle -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
           </div>
           <!--end::Container-->
         </div>

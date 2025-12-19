@@ -231,7 +231,7 @@
               <li class="nav-item">
                 <a href="./borrow.html" class="nav-link">
                   <i class="nav-icon bi bi-palette"></i>
-                  <p>Funds Request</p>
+                  <p>Request Fund</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -244,7 +244,7 @@
                 <a href="./payback.html" class="nav-link">
                   <i class="nav-icon bi bi-speedometer"></i>
 
-                  <p>Fund Payback</p>
+                  <p>Active Loans</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -288,11 +288,48 @@
         <div class="app-content">
           <!--begin::Container-->
           <div class="container-fluid py-4">
-            <!-- Welcome Banner -->
+            <div class="d-flex justify-content-between mb-3">
+              <h4 class="badge bg-success py-2 px-5 fw-medium">
+                Todays Rate: 1,600
+              </h4>
 
-            <!-- Stats Row -->
+              <div
+                class="btn-group btn-group-sm"
+                role="group"
+                aria-label="Date Filters"
+              >
+                <button
+                  type="button"
+                  class="btn btn-outline-primary active"
+                  id="dailyBtn"
+                >
+                  Daily
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  id="weeklyBtn"
+                >
+                  Weekly
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-success"
+                  id="monthlyBtn"
+                >
+                  Monthly
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-warning"
+                  id="yearlyBtn"
+                >
+                  Yearly
+                </button>
+              </div>
+            </div>
+
             <div class="row mb-4">
-              <!-- Stat Card: Total Fund Requests -->
               <div class="col-md-4 mb-3">
                 <div class="card shadow-sm border-0 h-100">
                   <div class="card-body text-center">
@@ -304,7 +341,6 @@
                 </div>
               </div>
 
-              <!-- Stat Card: Total Payments Received -->
               <div class="col-md-4 mb-3">
                 <div class="card shadow-sm border-0 h-100">
                   <div class="card-body text-center">
@@ -316,7 +352,6 @@
                 </div>
               </div>
 
-              <!-- Stat Card: Active Loans -->
               <div class="col-md-4 mb-3">
                 <div class="card shadow-sm border-0 h-100">
                   <div class="card-body text-center">
@@ -352,7 +387,7 @@
                       <tr>
                         <td>#001</td>
                         <td>2025-12-01</td>
-                        <td>CFA500,000</td>
+                        <td>500,000</td>
                         <td>800,000</td>
                         <td>Split (Self + Others)</td>
                         <td><span class="badge bg-success">Completed</span></td>
@@ -367,12 +402,31 @@
                       <tr>
                         <td>#002</td>
                         <td>2025-12-05</td>
-                        <td>CFA1M</td>
+                        <td>1M</td>
                         <td>1,600,000,000</td>
                         <td>Self Only</td>
                         <td>
                           <span class="badge bg-warning text-dark"
                             >Pending</span
+                          >
+                        </td>
+                        <td class="text-center">
+                          <a
+                            href="./transaction_details.html"
+                            class="btn btn-sm btn-outline-primary"
+                            >View</a
+                          >
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>#003</td>
+                        <td>2025-12-07</td>
+                        <td>2,500,000</td>
+                        <td>4,000,000,000</td>
+                        <td>Self Only</td>
+                        <td>
+                          <span class="badge bg-success text-white"
+                            >Approved</span
                           >
                         </td>
                         <td class="text-center">
@@ -415,6 +469,23 @@
     <!--end::App Wrapper-->
     <!--begin::Script-->
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <script>
+      const filterButtons = document.querySelectorAll(
+        '[aria-label="Date Filters"] .btn'
+      );
+      filterButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // Remove active from all
+          filterButtons.forEach((b) => b.classList.remove("active"));
+          // Add active to clicked
+          btn.classList.add("active");
+
+          // TODO: Load stats data based on filter
+          console.log("Filter selected:", btn.textContent);
+        });
+      });
+    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
       crossorigin="anonymous"
